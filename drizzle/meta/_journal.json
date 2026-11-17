@@ -15,6 +15,13 @@
       "when": 1794905843536,
       "tag": "0001_moaning_bill_hollister",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1794916081331,
+      "tag": "0002_living_nekra",
+      "breakpoints": true
     }
   ]
 }

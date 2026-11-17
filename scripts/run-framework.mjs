@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { readExecutionProfile } from "./execution-profile.mjs";
 
@@ -34,6 +34,11 @@ if (command === "build") {
       throw new Error(`Build did not produce required artifact: ${artifact}`);
     }
   }
+  // The Vite plugin bundles an older Wrangler that still emits this removed field.
+  const configPath = new URL("../dist/server/wrangler.json", import.meta.url);
+  const deploymentConfig = JSON.parse(readFileSync(configPath, "utf8"));
+  delete deploymentConfig.legacy_env;
+  writeFileSync(configPath, JSON.stringify(deploymentConfig));
   console.log(`Production build finished in ${Math.round((Date.now() - started) / 1000)}s; Worker and deployment configuration verified.`);
   process.exit(0);
 }

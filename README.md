@@ -71,3 +71,9 @@ The existing Sites audience remains private. The organiser can change it in Site
 ## Organiser notes
 
 Pricing and room arrangements are communicated by the organiser. No payments or room availability guarantees are implemented. Changes and deletion requests are handled by the organiser; clear guest data when it is no longer needed. The original supplied invitation image is preserved.
+
+## External Cloudflare deployment
+
+Set the Cloudflare build command to `npm run build` and the deploy command to `npm run deploy`. The deploy command first checks the production `DB` binding, creates missing RSVP/admin tables, adds `guest_key` only if absent, and verifies the unique indexes. Existing reservations are preserved. A schema failure stops deployment. This repairs databases initialized before migration 0002 as well as empty databases.
+
+To repair the existing live database from an authenticated checkout after building, run `npm run db:prepare:production`. This requires Cloudflare D1 write access. No admin session secret is needed to submit an RSVP.

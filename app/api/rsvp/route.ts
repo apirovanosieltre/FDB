@@ -25,5 +25,5 @@ export async function POST(req:Request){
  const concurrent=await db.select().from(reservations).where(eq(reservations.guestKey,key)).get();
  if(concurrent)return receipt(concurrent,true);
  return Response.json({error:'Please reopen the experience and try again.'},{status:409,headers});
- }catch{return Response.json({error:'We couldn’t save your RSVP. Please try again; your response won’t be duplicated.'},{status:503,headers});}
+ }catch(error){console.error('RSVP persistence failed',error);return Response.json({error:'We couldn’t save your RSVP. Please try again; your response won’t be duplicated.'},{status:503,headers});}
 }

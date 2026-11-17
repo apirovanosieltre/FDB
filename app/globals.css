@@ -9,3 +9,26 @@
 .admin-login{max-width:420px;margin:25px auto 0;text-align:left}.admin-login .fields{grid-template-columns:1fr}.admin-login>.button{width:100%;margin-top:22px}.admin-actions{display:flex;gap:20px;align-items:center}.admin-actions .back{margin:0}
 
 .pwa-panel{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:0 5% 30px;padding:30px;border:1px solid var(--line);background:#f8edf0;border-radius:6px}.pwa-panel h2{font-size:26px;display:flex;align-items:center;gap:12px}.pwa-panel p{font-size:12px;line-height:1.8;color:#86586a}.pwa-panel .eyebrow{font-size:8px}.pwa-actions{align-self:center}.pwa-actions details{margin-top:16px;font-size:12px}.pwa-actions summary{cursor:pointer;text-decoration:underline}.pwa-actions summary:focus-visible{outline:3px solid var(--pink);outline-offset:4px}.connection-note{position:sticky;bottom:0;z-index:12;background:#59223a;color:white;padding:13px 20px;text-align:center;font-size:12px}.pwa-panel .install-message{font-size:11px}@media(max-width:650px){.pwa-panel{grid-template-columns:1fr;gap:14px;padding:23px;margin:0 6% 25px}.pwa-panel h2{font-size:23px}.pwa-panel .button{width:100%}}
+
+/* Guest names and RSVP choices stay readable on narrow screens. */
+.guest-list{border-radius:10px;background:#fffafa}
+.guest-list td{vertical-align:middle;line-height:1.5}
+.guest-list tbody tr:last-child td{border-bottom:0}
+.guest-list .guest-name{font-size:14px;font-weight:600;overflow-wrap:anywhere}
+.guest-list .status-tag{display:inline-block;line-height:1.5;padding:7px 10px;font-size:12px}
+.guest-response time{display:flex;flex-wrap:wrap;column-gap:8px;row-gap:2px}
+.guest-response-time{color:#86586a}
+.guest-response-label{display:none}
+@media(max-width:640px){
+ .guest-list{border:0;border-radius:0;background:transparent;overflow:visible}
+ .guest-list table,.guest-list tbody{display:block}
+ .guest-list thead{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
+ .guest-list tr{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:18px;margin-bottom:12px;border:1px solid var(--line);border-radius:10px;background:#fffafa}
+ .guest-list td{display:block;padding:0;border:0}
+ .guest-list .guest-name{font-size:17px}
+ .guest-list .guest-response{font-size:12px;color:#86586a;padding-top:10px;border-top:1px solid var(--line)}
+ .guest-response-label{display:inline}
+ .guest-response time{display:inline-flex;column-gap:8px}
+ .admin-controls{gap:10px}
+ .admin-controls .button{gap:10px;padding:15px}
+}

@@ -77,3 +77,15 @@ Pricing and room arrangements are communicated by the organiser. No payments or 
 Set the Cloudflare build command to `npm run build` and the deploy command to `npm run deploy`. The deploy command first checks the production `DB` binding, creates missing RSVP/admin tables, adds `guest_key` only if absent, and verifies the unique indexes. Existing reservations are preserved. A schema failure stops deployment. This repairs databases initialized before migration 0002 as well as empty databases.
 
 To repair the existing live database from an authenticated checkout after building, run `npm run db:prepare:production`. This requires Cloudflare D1 write access. No admin session secret is needed to submit an RSVP.
+
+### Set admin runtime secrets with Wrangler
+
+Secrets entered in Cloudflare Build settings are only available during builds. For the running production Worker, run each command below from this project and enter its value at the private prompt:
+
+```sh
+npx wrangler secret put ADMIN_USERNAME --name fdb
+npx wrangler secret put ADMIN_PASSWORD --name fdb
+npx wrangler secret put ADMIN_SESSION_SECRET --name fdb
+```
+
+These commands update Cloudflare directly; they do not create Git changes. Never commit the secret values.

@@ -98,3 +98,9 @@
 .confirmation-footer p + p {margin-top:5px;}
 .confirmation-declined h3 {font:24px 'Playfair Display',serif;margin:0 0 8px;}
 .confirmation-declined p {margin:0;}
+
+.guest-edit .button {gap:8px;padding:10px 14px;min-height:40px;}
+.guest-edit label {display:grid;gap:5px;font-size:12px;}
+.guest-edit select {max-width:100%;padding:8px;border:1px solid var(--line);border-radius:4px;background:#fff;}
+.guest-edit-buttons {display:flex;align-items:center;gap:12px;margin-top:8px;}
+.guest-edit-buttons .back {margin:0;}

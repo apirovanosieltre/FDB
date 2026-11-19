@@ -104,3 +104,10 @@
 .guest-edit select {max-width:100%;padding:8px;border:1px solid var(--line);border-radius:4px;background:#fff;}
 .guest-edit-buttons {display:flex;align-items:center;gap:12px;margin-top:8px;}
 .guest-edit-buttons .back {margin:0;}
+
+/* Keep form controls readable at focus so iPhone Safari leaves the page scale alone. */
+@media (max-width:650px), (pointer:coarse) {
+ .fields input, .admin-controls input, .admin-controls select, .guest-edit select {
+  font-size:16px;
+ }
+}

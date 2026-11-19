@@ -10,15 +10,16 @@ function ConfirmationActions({experience}:{experience:string}) {
 
   return (
     <div id="confirmation-actions" tabIndex={-1} style={{marginTop:20,display:'flex',flexWrap:'wrap',gap:12,alignItems:'flex-start'}}>
-      <details>
-        <summary className="button" style={{cursor:'pointer',gap:12}}><CalendarDays size={17}/> Save to calendar</summary>
-        <div style={{display:'grid',gap:14,padding:'16px 0',fontSize:12}}>
-          <a className="text-link" style={{marginTop:0}} href={links.google} target="_blank" rel="noopener noreferrer">Google Calendar <ArrowUpRight size={15}/></a>
-          <a className="text-link" style={{marginTop:0}} href={links.ics}>Download .ics for Apple Calendar / Outlook <Download size={15}/></a>
-          <small>Open the downloaded file to add the event. If it doesn’t open in the installed app, try downloading it in your browser.</small>
-        </div>
-      </details>
+      <a className="button" style={{gap:12}} href={links.google} target="_blank" rel="noopener noreferrer">
+        <CalendarDays size={17}/> Google Calendar <ArrowUpRight size={15}/>
+      </a>
+      <a className="button" style={{gap:12}} href={links.ics} download aria-describedby="calendar-download-help">
+        <Download size={17}/> Download calendar file (.ics)
+      </a>
       <a className="button" style={{gap:12}} href={links.pdf} download><Download size={17}/> Download experience PDF</a>
+      <small id="calendar-download-help" style={{flexBasis:'100%',fontSize:12,lineHeight:1.5}}>
+        On iPhone, download in Safari and check Downloads. To add the event to Apple Calendar, open the .ics file as an attachment in Apple Mail.
+      </small>
     </div>
   );
 }

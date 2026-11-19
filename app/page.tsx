@@ -47,9 +47,9 @@ function Confirmation({receipt}: {receipt: ReservationReceipt}) {
         <div id="confirmation-actions" className="confirmation-actions">
           <a className="button confirmation-pdf" href={links.pdf} download><Download size={17}/> Download experience PDF</a>
           <a className="button confirmation-calendar" href={links.google} target="_blank" rel="noopener noreferrer">Google Calendar <ArrowUpRight size={15}/></a>
-          <a className="button confirmation-calendar" href={links.ics} download aria-describedby="calendar-download-help"><Download size={15}/> Download .ics</a>
+          <a className="button confirmation-calendar" href={links.ics} download aria-describedby="calendar-download-help"><CalendarDays size={15} aria-hidden="true"/> Download for Apple Calendar</a>
           <small id="calendar-download-help">
-            On iPhone, check Safari Downloads. To add the event, open the .ics attachment in Apple Mail.
+            On iPhone, find the calendar file in Safari’s Downloads. To add the event, open the file as an attachment in Apple Mail.
           </small>
         </div>
       </> : <div className="confirmation-declined">

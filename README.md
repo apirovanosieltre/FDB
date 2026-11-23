@@ -7,13 +7,14 @@ An installable birthday invitation for Pink 30s, 21–22 February 2027, Hotel Va
 - **Dinner with Barbie:** dinner on 21 February at 8:00 PM.
 - **Barbie Sleepover:** dinner and an overnight stay, 21–22 February.
 - **Love Note for Barbie:** a named decline; excluded from dinner and overnight totals.
-- Only first and last name are requested, plus the chosen RSVP and privacy acknowledgement.
-- Cloudflare D1 stores the names, RSVP option, submission timestamp, UUID and retry identifier.
+- First and last name, the chosen RSVP and a privacy acknowledgement are requested. Dinner and sleepover also require Yes/No for food allergies/intolerances; Yes requires a description and separate explicit consent.
+- Cloudflare D1 stores names, RSVP option, timestamp, UUID, retry identifier, any dietary details, and the SHA-256 hash of a random editing credential. The credential itself is stored only on the booking device, not in D1.
+- Guests who booked with the new flow can review and update their own dietary information from the saved confirmation, without changing their experience. Guests booked before credentials were introduced must contact the organiser to amend dietary details: name alone is not proof of ownership. Dietary details are not disclosed to other guests.
 - Retried submissions are idempotent. The same person can still respond from multiple devices; names alone do not uniquely identify guests.
 
 ## Admin
 
-Open `/admin` and sign in with the fixed credentials configured as runtime secrets. Includes attendance, dinner, overnight and decline counts; name search; RSVP filters; CSV export; sign-out.
+Open `/admin` and sign in with the fixed credentials configured as runtime secrets. Includes attendance, dinner, overnight and decline counts; name search; RSVP filters; CSV export; sign-out. Bookings with declared dietary requirements are highlighted yellow and have an organiser-only Intolleranze button.
 
 Required runtime secrets (do not put actual values in Git):
 
@@ -70,11 +71,11 @@ The existing Sites audience remains private. The organiser can change it in Site
 
 ## Organiser notes
 
-Pricing and room arrangements are communicated by the organiser. No payments or room availability guarantees are implemented. Changes and deletion requests are handled by the organiser; clear guest data when it is no longer needed. The original supplied invitation image is preserved.
+Pricing and room arrangements are communicated by the organiser. No payments or room availability guarantees are implemented. Changes and deletion requests are handled by the organiser; clear guest data, especially sensitive dietary details, when it is no longer needed. The original supplied invitation image is preserved.
 
 ## External Cloudflare deployment
 
-Set the Cloudflare build command to `npm run build` and the deploy command to `npm run deploy`. The deploy command first checks the production `DB` binding, creates missing RSVP/admin tables, adds `guest_key` only if absent, and verifies the unique indexes. Existing reservations are preserved. A schema failure stops deployment. This repairs databases initialized before migration 0002 as well as empty databases.
+Set the Cloudflare build command to `npm run build` and the deploy command to `npm run deploy`. The deploy command first checks the production `DB` binding, creates missing RSVP/admin tables, adds `guest_key`, `dietary_notes` and `edit_token_hash` only if absent, and verifies the unique indexes. Existing reservations are preserved. A schema failure stops deployment. This repairs databases initialized before migration 0002 as well as empty databases.
 
 To repair the existing live database from an authenticated checkout after building, run `npm run db:prepare:production`. This requires Cloudflare D1 write access. No admin session secret is needed to submit an RSVP.
 

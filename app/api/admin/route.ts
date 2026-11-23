@@ -5,7 +5,7 @@ import {desc, eq} from 'drizzle-orm';
 export const dynamic='force-dynamic';
 export async function GET(request:Request){
  if(!await isAdmin(request))return Response.json({error:'Please sign in to access the guest list.'},{status:401,headers:{'Cache-Control':'no-store'}});
- try{return Response.json(await getDb().select({id:reservations.id,firstName:reservations.firstName,lastName:reservations.lastName,experience:reservations.experience,createdAt:reservations.createdAt}).from(reservations).orderBy(desc(reservations.createdAt)),{headers:{'Cache-Control':'no-store'}})}catch{return Response.json({error:'The guest list is unavailable. Please try again.'},{status:503})}}
+ try{return Response.json(await getDb().select({id:reservations.id,firstName:reservations.firstName,lastName:reservations.lastName,experience:reservations.experience,createdAt:reservations.createdAt,dietaryNotes:reservations.dietaryNotes}).from(reservations).orderBy(desc(reservations.createdAt)),{headers:{'Cache-Control':'no-store'}})}catch{return Response.json({error:'The guest list is unavailable. Please try again.'},{status:503})}}
 
 export async function PATCH(request: Request) {
  const headers = {'Cache-Control': 'no-store'};
@@ -24,9 +24,9 @@ export async function PATCH(request: Request) {
 
  try {
    const updated = await getDb().update(reservations)
-     .set({experience: changes.experience})
+     .set({experience: changes.experience, ...(changes.experience === 'note' ? {dietaryNotes: null} : {})})
      .where(eq(reservations.id, changes.id))
-     .returning({id: reservations.id, experience: reservations.experience})
+     .returning({id: reservations.id, experience: reservations.experience, dietaryNotes: reservations.dietaryNotes})
      .get();
    if (!updated) return Response.json({error: 'Reservation not found. Refresh the guest list.'}, {status: 404, headers});
    return Response.json(updated, {headers});

@@ -38,6 +38,12 @@ if (!Array.isArray(columns) || !columns.some(column => column.name === 'request_
 if (!columns.some(column => column.name === 'guest_key')) {
   execute('ALTER TABLE reservations ADD COLUMN guest_key text');
 }
+if (!columns.some(column => column.name === 'dietary_notes')) {
+  execute('ALTER TABLE reservations ADD COLUMN dietary_notes text');
+}
+if (!columns.some(column => column.name === 'edit_token_hash')) {
+  execute('ALTER TABLE reservations ADD COLUMN edit_token_hash text');
+}
 execute(`CREATE UNIQUE INDEX IF NOT EXISTS reservations_request_id_unique ON reservations (request_id);
 CREATE UNIQUE INDEX IF NOT EXISTS reservations_guest_key_unique ON reservations (guest_key);`);
 console.log('Production RSVP database schema verified.');

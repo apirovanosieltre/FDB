@@ -65,7 +65,7 @@ function Confirmation({receipt, onDietarySaved}: {receipt: ReservationReceipt; o
       {links && <DietaryManager receipt={receipt} onSaved={onDietarySaved}/>}
       <div className="confirmation-footer">
         {receipt.existing && <p role="status">You already sent an RSVP. This is your saved response.</p>}
-        <p>To change the experience itself, contact the organiser. Food allergy details can be edited above.</p>
+        <p>{links ? 'To change the experience itself, contact the organiser. Food allergy details can be edited above when editing access is available.' : 'To change your RSVP, contact the organiser.'}</p>
       </div>
     </section>
   );

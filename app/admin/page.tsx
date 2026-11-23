@@ -22,9 +22,9 @@ async function saveExperience(event: React.FormEvent<HTMLFormElement>, row: Row)
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(editing),
     });
-    const result = await response.json() as {id:string; experience:string; error?:string};
+    const result = await response.json() as {id:string; experience:string; dietaryNotes:string|null; error?:string};
     if (!response.ok) throw Error(result.error || 'Could not save the experience.');
-    setRows(previous => previous.map(guest => guest.id === result.id ? {...guest, experience:result.experience} : guest));
+    setRows(previous => previous.map(guest => guest.id === result.id ? {...guest, experience:result.experience, dietaryNotes:result.dietaryNotes} : guest));
     setEditing(null);
     setEditNotice(`Saved ${row.firstName} ${row.lastName}’s RSVP as ${experienceLabel(result.experience)}.`);
   } catch (error) {

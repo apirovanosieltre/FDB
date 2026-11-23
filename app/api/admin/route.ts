@@ -26,7 +26,7 @@ export async function PATCH(request: Request) {
    const updated = await getDb().update(reservations)
      .set({experience: changes.experience, ...(changes.experience === 'note' ? {dietaryNotes: null} : {})})
      .where(eq(reservations.id, changes.id))
-     .returning({id: reservations.id, experience: reservations.experience})
+     .returning({id: reservations.id, experience: reservations.experience, dietaryNotes: reservations.dietaryNotes})
      .get();
    if (!updated) return Response.json({error: 'Reservation not found. Refresh the guest list.'}, {status: 404, headers});
    return Response.json(updated, {headers});

@@ -24,7 +24,7 @@ export async function PATCH(request: Request) {
 
  try {
    const updated = await getDb().update(reservations)
-     .set({experience: changes.experience})
+     .set({experience: changes.experience, ...(changes.experience === 'note' ? {dietaryNotes: null} : {})})
      .where(eq(reservations.id, changes.id))
      .returning({id: reservations.id, experience: reservations.experience})
      .get();

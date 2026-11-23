@@ -1,13 +1,13 @@
 export const MAX_DIETARY_NOTES = 1000;
 
-export function parseDietaryInput(body: Record<string, unknown>, attending: boolean): { notes: string | null; error?: never } | { error: string; notes?: never } {
+export function parseDietaryInput(body: Record<string, unknown>, attending: boolean): { notes: string | null; error?: string } {
   if (!attending) return { notes: null };
-  if (typeof body.hasAllergies !== 'boolean') return { error: 'Please select Yes or No for food allergies and intolerances.' };
+  if (typeof body.hasAllergies !== 'boolean') return { notes: null, error: 'Please select Yes or No for food allergies and intolerances.' };
   if (!body.hasAllergies) return { notes: null };
-  if (typeof body.allergyDetails !== 'string') return { error: 'Please describe your food allergies or intolerances.' };
+  if (typeof body.allergyDetails !== 'string') return { notes: null, error: 'Please describe your food allergies or intolerances.' };
   const notes = body.allergyDetails.trim();
-  if (notes.length < 3 || notes.length > MAX_DIETARY_NOTES) return { error: 'Please describe your dietary needs in 3 to 1000 characters.' };
-  if (body.dietaryConsent !== true) return { error: 'Please consent to sharing your dietary requirements with the organiser.' };
+  if (notes.length < 3 || notes.length > MAX_DIETARY_NOTES) return { notes: null, error: 'Please describe your dietary needs in 3 to 1000 characters.' };
+  if (body.dietaryConsent !== true) return { notes: null, error: 'Please consent to sharing your dietary requirements with the organiser.' };
   return { notes };
 }
 
